@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Site')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<div class="container mt-4" style="max-width:700px">
+  <h3 th:text="${site.id == null} ? 'Ajouter un site' : 'Modifier le site'"></h3>
+  <form th:action="@{/sites/save}" th:object="${site}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    <h5 class="mt-3">Identification</h5>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Référence du site (nom technique)</label>
+        <input th:field="*{referenceSite}" class="form-control" placeholder="ex: MDN_001">
+        <div class="text-danger small" th:if="${#fields.hasErrors('referenceSite')}" th:errors="*{referenceSite}"></div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Adresse IP</label>
+        <input th:field="*{adresseIp}" class="form-control" placeholder="ex: 10.12.5.20">
+        <div class="text-danger small" th:if="${#fields.hasErrors('adresseIp')}" th:errors="*{adresseIp}"></div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Network element</label>
+      <input th:field="*{networkElement}" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Adresse complète</label>
+      <input th:field="*{adresseComplete}" class="form-control">
+      <div class="text-danger small" th:if="${#fields.hasErrors('adresseComplete')}" th:errors="*{adresseComplete}"></div>
+    </div>
+
+    <h5 class="mt-3">Coordonnées</h5>
+    <div class="row">
+      <div class="col mb-3">
+        <label class="form-label">Latitude</label>
+        <input type="number" step="any" th:field="*{latitude}" class="form-control">
+        <div class="text-danger small" th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"></div>
+      </div>
+      <div class="col mb-3">
+        <label class="form-label">Longitude</label>
+        <input type="number" step="any" th:field="*{longitude}" class="form-control">
+        <div class="text-danger small" th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}"></div>
+      </div>
+    </div>
+
+    <h5 class="mt-3">Installation sur terrain</h5>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Date d'installation</label>
+        <input type="date" th:field="*{dateInstallation}" class="form-control">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Technicien</label>
+        <input th:field="*{technicienInstallation}" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Type d'installation</label>
+        <input th:field="*{typeInstallation}" class="form-control" placeholder="ex: BTS, antenne, pylône">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Statut</label>
+        <select th:field="*{statut}" class="form-select">
+          <option value="">-- Choisir --</option>
+          <option value="En service">En service</option>
+          <option value="En maintenance">En maintenance</option>
+          <option value="Hors service">Hors service</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Observations</label>
+      <textarea th:field="*{observations}" class="form-control" rows="3"></textarea>
+    </div>
+
+    <button class="btn btn-primary">Enregistrer</button>
+    <a class="btn btn-secondary" th:href="@{/sites}">Annuler</a>
+  </form>
+</div>
+</body>
+</html>

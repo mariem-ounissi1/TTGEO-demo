@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Utilisateurs')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-3">
+   <h3 class="mb-3">Liste des utilisateurs</h3>
+   <a class="btn btn-success" th:href="@{/users/new}">+ Ajouter un utilisateur</a>
+  </div>
+  <table class="table table-striped align-middle">
+    <thead><tr><th>#</th><th>Nom</th><th>Email</th><th>Rôle</th><th></th></tr></thead>
+    <tbody>
+      <tr th:each="u : ${users}">
+        <td th:text="${u.id}"></td><td th:text="${u.nom}"></td><td th:text="${u.email}"></td><td th:text="${u.role}"></td>
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-primary" th:href="@{/users/edit/{id}(id=${u.id})}">Modifier</a>
+          <form th:action="@{/users/delete/{id}(id=${u.id})}" method="post" class="d-inline"
+                onsubmit="return confirm('Supprimer cet utilisateur ?')">
+            <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

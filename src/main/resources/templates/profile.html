@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Profil')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<div class="container mt-4" style="max-width:500px">
+  <h3>Mon profil</h3>
+  <div class="alert alert-success" th:if="${param.saved}">Profil mis à jour</div>
+  <div class="alert alert-danger" th:if="${param.invalid}">Téléphone et CIN : 8 chiffres chacun</div>
+  <form th:action="@{/profile}" method="post">
+    <div class="mb-3"><label class="form-label">Email</label><input class="form-control" th:value="${user.email}" disabled></div>
+    <div class="mb-3"><label class="form-label">Nom</label><input name="nom" class="form-control" th:value="${user.nom}" required></div>
+    <div class="mb-3"><label class="form-label">Nouveau mot de passe (optionnel)</label><input type="password" name="newPassword" class="form-control" minlength="6"></div>
+    <div class="mb-3"><label class="form-label">Téléphone</label>
+      <input name="telephone" class="form-control" th:value="${user.telephone}" maxlength="8" pattern="\d{8}" placeholder="8 chiffres"></div>
+    <div class="mb-3"><label class="form-label">CIN</label>
+       <input name="cin" class="form-control" th:value="${user.cin}" maxlength="8" pattern="\d{8}" placeholder="8 chiffres"></div>
+    <button class="btn btn-primary">Enregistrer</button>
+  </form>
+</div>
+</body>
+</html>

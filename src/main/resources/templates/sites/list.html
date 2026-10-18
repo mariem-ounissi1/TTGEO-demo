@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Sites')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-3">
+    <h3>Liste des sites</h3>
+    <a class="btn btn-success" th:href="@{/sites/new}">+ Ajouter un site</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>#</th><th>Référence</th><th>Adresse IP</th><th>Adresse complète</th>
+          <th>Network element</th><th>Latitude</th><th>Longitude</th>
+          <th>Date installation</th><th>Statut</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="s : ${sites}">
+          <td th:text="${s.id}"></td>
+          <td th:text="${s.referenceSite}"></td>
+          <td th:text="${s.adresseIp}"></td>
+          <td th:text="${s.adresseComplete}"></td>
+          <td th:text="${s.networkElement}"></td>
+          <td th:text="${s.latitude}"></td>
+          <td th:text="${s.longitude}"></td>
+          <td th:text="${s.dateInstallation}"></td>
+          <td th:text="${s.statut}"></td>
+          <td class="text-end text-nowrap">
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/sites/edit/{id}(id=${s.id})}">Modifier</a>
+            <form th:action="@{/sites/delete/{id}(id=${s.id})}" method="post" class="d-inline"
+                  onsubmit="return confirm('Supprimer ce site ?')">
+              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(sites)}">
+          <td colspan="10" class="text-center text-muted">Aucun site</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

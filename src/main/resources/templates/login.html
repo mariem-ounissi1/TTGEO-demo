@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Connexion')}"></head>
+<body>
+<style>
+  .login-visual {
+    background-image:
+      linear-gradient(rgba(7, 20, 45, .10), rgba(7, 20, 45, .10)),
+      url('/css/images/bg.jpg');
+    background-size: cover;
+    background-position: 53% center;
+    background-repeat: no-repeat;
+  }
+  .login-form-side { background: #f6f8fc; }
+  .login-box { width: 100%; max-width: 380px; }
+  .login-logo { font-size: 2.4rem; line-height: 1; margin-bottom: .5rem; }
+  .login-box .form-control { background: #fff; border-color: #d9e0ec; }
+  .login-box .form-control:focus {
+    border-color: #2b6cff;
+    box-shadow: 0 0 0 .2rem rgba(43, 108, 255, .15);
+  }
+</style>
+
+<div class="container-fluid p-0">
+  <div class="row g-0 min-vh-100">
+
+    <!-- Côté image (caché sur téléphone) -->
+    <div class="col-lg-7 d-none d-lg-block login-visual"></div>
+
+    <!-- Côté formulaire -->
+    <div class="col-12 col-lg-5 d-flex align-items-center justify-content-center login-form-side p-4">
+      <div class="login-box">
+
+        <div class="text-center mb-4">
+          <div class="login-logo">📡</div>
+          <h3 class="fw-semibold mb-1">Connexion</h3>
+          <p class="text-muted mb-0">Gestion des sites GSM</p>
+        </div>
+
+        <div class="alert alert-danger" th:if="${param.error}">Email ou mot de passe incorrect</div>
+        <div class="alert alert-info" th:if="${param.logout}">Vous êtes déconnecté</div>
+        <div class="alert alert-success" th:if="${param.registered}">Compte créé, vous pouvez vous connecter</div>
+
+        <form th:action="@{/login}" method="post">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="username" class="form-control form-control-lg" required autofocus>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" name="password" class="form-control form-control-lg" required>
+          </div>
+          <button class="btn btn-primary btn-lg w-100 mt-2">Se connecter</button>
+        </form>
+
+        <p class="mt-4 mb-0 text-center">
+          <a th:href="@{/register}">Créer un compte</a>
+        </p>
+        <p class="mt-4 mb-0 text-center text-muted small">Tunisie Télécom · Médenine</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
